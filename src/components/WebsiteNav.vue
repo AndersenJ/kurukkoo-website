@@ -20,6 +20,7 @@ export default {
     max-width: 430px;
     justify-content: space-evenly;
     margin: auto;
+    flex-wrap: wrap;
 }
 
 .websitenav a {
