@@ -3,6 +3,7 @@
         <router-link to="/">Home</router-link>
         <router-link to="/archive">Archive</router-link>
         <router-link to="/about">About</router-link>
+        <a href="https://www.patreon.com/kadew">Patreon</a>
     </div>
 </template>
 
