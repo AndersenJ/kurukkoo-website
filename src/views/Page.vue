@@ -1,11 +1,13 @@
 <template>
     <div class="page">
         <h1>{{this.page}}</h1>
-        <img :src="url">
+        <a :href="nextPageUrl">Next</a>
+        <img :src="imgUrl">
     </div>
 </template>
 
 <script>
+import files from '@/pages'
 export default {
     name: 'Page',
     computed: {
@@ -23,9 +25,36 @@ export default {
                 return this.$route.query.page;
             }
         },
-        url() {
+        imgUrl() {
             return "/comic/" + this.chapter + "/" + this.page + ".png";
+        },
+        chapters() {
+            return files.filter(file => file.filename.length === 2);
+        },
+        allPages() {
+            return files.filter(file => file.filename.length > 2);
+        },
+        nextPageUrl() {
+            for (let p in this.allPages) {
+                if (this.allPages[p].filename === this.page + ".png") {
+                    let nextPage = this.allPages[parseInt(p)+1];
+                    if (nextPage !== undefined) {
+                        console.log("next page:");
+                        console.log(nextPage);
+                        return "/?chapter=" + this.chapterFromPage(nextPage) + "&page=" + nextPage.filename.substr(0, nextPage.filename.length-4);
+                    }
+                }
+            }
+            return "/?chapter=" + this.chapter + "&page=" + this.page;
         }
+    },
+    methods: {
+        chapterFromPage(p) {
+            return p.parent.substr(-2);
+        },
+        pages(chapter) {
+            return files.filter(file => file.parent === "public/comic/" + chapter);
+        },
     }
 }
 </script>
