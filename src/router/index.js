@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Page from '../views/Page.vue'
+import Archive from '../views/Archive.vue'
+import About from '../views/About.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +11,16 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Page',
     component: Page
+  },
+  {
+    path: '/archive',
+    name: 'Archive',
+    component: Archive
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
   },
 ]
 
