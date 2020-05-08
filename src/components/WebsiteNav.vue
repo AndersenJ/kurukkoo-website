@@ -1,8 +1,8 @@
 <template>
     <div class="websitenav">
-        <a href="/">Home</a>
-        <a href="/archive">Archive</a>
-        <a href="/about">About</a>
+        <router-link to="/">Home</router-link>
+        <router-link to="/archive">Archive</router-link>
+        <router-link to="/about">About</router-link>
     </div>
 </template>
 
