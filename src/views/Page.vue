@@ -1,6 +1,5 @@
 <template>
     <div class="page">
-        <WebsiteNav />
         <h1>{{this.page}}</h1>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
         <a :href="nextPageUrl">
@@ -13,13 +12,11 @@
 <script>
 import files from '@/pages';
 import ComicNav from '../components/ComicNav.vue';
-import WebsiteNav from '../components/WebsiteNav.vue';
 
 export default {
     name: 'Page',
     components : {
         ComicNav: ComicNav,
-        WebsiteNav: WebsiteNav
     },
     computed: {
         chapter() {
