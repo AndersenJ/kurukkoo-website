@@ -1,8 +1,10 @@
 <template>
     <div class="page">
         <h1>{{this.page}}</h1>
-        <a :href="nextPageUrl">Next</a>
+        <a :href="firstPageUrl">First</a>
         <a :href="prevPageUrl">Prev</a>
+        <a :href="nextPageUrl">Next</a>
+        <a :href="latestPageUrl">Latest</a>
         <a :href="nextPageUrl">
             <img :src="imgUrl">
         </a>
@@ -37,6 +39,9 @@ export default {
         allPages() {
             return files.filter(file => file.filename.length > 2);
         },
+        firstPageUrl() {
+            return "/?chapter=00&page=000";
+        },
         nextPageUrl() {
             for (let p in this.allPages) {
                 if (this.allPages[p].filename === this.page + ".png") {
@@ -58,7 +63,11 @@ export default {
                 }
             }
             return "/?chapter=" + this.chapter + "&page=" + this.page;
-        }
+        },
+        latestPageUrl() {
+            let latestPage = this.allPages[this.allPages.length-1];
+            return "/?chapter=" + this.chapterFromPage(latestPage) + "&page=" + latestPage.filename.substr(0, latestPage.filename.length-4);
+        },
     },
     methods: {
         chapterFromPage(p) {
