@@ -1,9 +1,9 @@
 <template>
     <div class="comicnav">
-        <a :href="firstPageUrl">First</a>
-        <a :href="prevPageUrl">Prev</a>
-        <a :href="nextPageUrl">Next</a>
-        <a :href="latestPageUrl">Latest</a>
+        <a :href="firstPageUrl">&lt;&lt;</a>
+        <a :href="prevPageUrl">&lt;</a>
+        <a :href="nextPageUrl">&gt;</a>
+        <a :href="latestPageUrl">&gt;&gt;</a>
     </div>
 </template>
 
@@ -35,8 +35,10 @@ export default {
 <style scoped>
 .comicnav a {
     padding: 15px;
+    padding-bottom: 13px;
     margin: 18px;
     background-color: #505050;
     color: #dcdcdc;
+    text-decoration: none;
 }
 </style>

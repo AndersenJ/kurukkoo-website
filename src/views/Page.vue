@@ -3,7 +3,7 @@
         <h1>{{this.page}}</h1>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
         <a :href="nextPageUrl">
-            <img :src="imgUrl">
+            <img :src="imgUrl" id="comic-page">
         </a>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
     </div>
@@ -21,14 +21,16 @@ export default {
     computed: {
         chapter() {
             if (this.$route.query.chapter == null) {
-                return "00";
+                let latestPage = this.allPages[this.allPages.length-1];
+                return this.chapterFromPage(latestPage);
             } else {
                 return this.$route.query.chapter;
             }
         },
         page() {
             if (this.$route.query.page == null) {
-                return "000";
+                let latestPage = this.allPages[this.allPages.length-1];
+                return latestPage.filename.substr(0, latestPage.filename.length-4);
             } else {
                 return this.$route.query.page;
             }
@@ -85,4 +87,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#comic-page {
+    margin-top: 15px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
 </style>
