@@ -1,20 +1,23 @@
 <template>
     <div class="page">
         <h1>{{this.page}}</h1>
-        <a :href="firstPageUrl">First</a>
-        <a :href="prevPageUrl">Prev</a>
-        <a :href="nextPageUrl">Next</a>
-        <a :href="latestPageUrl">Latest</a>
+        <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
         <a :href="nextPageUrl">
             <img :src="imgUrl">
         </a>
+        <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
     </div>
 </template>
 
 <script>
-import files from '@/pages'
+import files from '@/pages';
+import ComicNav from '../components/ComicNav.vue';
+
 export default {
     name: 'Page',
+    components : {
+        ComicNav: ComicNav
+    },
     computed: {
         chapter() {
             if (this.$route.query.chapter == null) {
