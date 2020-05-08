@@ -33,10 +33,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.comicnav {
+    display: flex;
+    max-width: 320px;
+    justify-content: space-evenly;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
 .comicnav a {
     padding: 15px;
     padding-bottom: 13px;
-    margin: 18px;
     background-color: #505050;
     color: #dcdcdc;
     text-decoration: none;

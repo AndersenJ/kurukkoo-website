@@ -100,9 +100,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #comic-page {
-    margin-top: 15px;
-    padding-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    padding-top: 8px;
     padding-bottom: 15px;
     width: 100%;
     max-width: 800px;

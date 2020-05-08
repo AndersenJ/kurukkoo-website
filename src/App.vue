@@ -35,7 +35,7 @@ body {
     width: 100%;
     max-width: 1400px;
     margin: auto;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .footer-spacer {
@@ -43,8 +43,8 @@ body {
 }
 
 h1 {
-    margin-top: 14px;
-    margin-bottom: 18px;
+    margin-top: 13px;
+    margin-bottom: 6px;
 }
 
 .footer, .footer a {
