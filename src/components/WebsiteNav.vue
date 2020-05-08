@@ -15,10 +15,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.websitenav {
+    display: flex;
+    max-width: 430px;
+    justify-content: space-between;
+    margin: auto;
+}
+
 .websitenav a {
     padding: 15px;
     padding-bottom: 11px;
-    margin: 18px;
     background-color: #505050;
     color: #dcdcdc;
     text-decoration: none;

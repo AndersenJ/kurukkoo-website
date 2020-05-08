@@ -42,6 +42,11 @@ body {
     height: 70px;
 }
 
+h1 {
+    margin-top: 14px;
+    margin-bottom: 18px;
+}
+
 .footer, .footer a {
     width: 100%;
     margin: auto;
