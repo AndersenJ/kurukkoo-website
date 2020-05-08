@@ -25,6 +25,7 @@ body {
     width: 100%;
     max-width: 1400px;
     margin: auto;
+    margin-bottom: 12px;
 }
 
 .footer-spacer {

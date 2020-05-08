@@ -1,5 +1,6 @@
 <template>
     <div class="page">
+        <WebsiteNav />
         <h1>{{this.page}}</h1>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
         <a :href="nextPageUrl">
@@ -12,11 +13,13 @@
 <script>
 import files from '@/pages';
 import ComicNav from '../components/ComicNav.vue';
+import WebsiteNav from '../components/WebsiteNav.vue';
 
 export default {
     name: 'Page',
     components : {
-        ComicNav: ComicNav
+        ComicNav: ComicNav,
+        WebsiteNav: WebsiteNav
     },
     computed: {
         chapter() {
@@ -81,10 +84,22 @@ export default {
         pages(chapter) {
             return files.filter(file => file.parent === "public/comic/" + chapter);
         },
+    },
+    mounted() {
+        document.onkeydown = (event) => {
+            switch (event.keyCode) {
+                case 37:
+                    window.location.href = this.prevPageUrl;
+                break;
+                case 39:
+                    window.location.href = this.nextPageUrl;
+                break;
+            }
+        };
     }
 }
-</script>
 
+</script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #comic-page {
