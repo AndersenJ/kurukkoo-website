@@ -1,9 +1,9 @@
 <template>
     <div class="comicnav">
-        <a :href="firstPageUrl">&lt;&lt;</a>
-        <a :href="prevPageUrl">&lt;</a>
-        <a :href="nextPageUrl">&gt;</a>
-        <a :href="latestPageUrl">&gt;&gt;</a>
+        <router-link :to="firstPageUrl">&lt;&lt;</router-link>
+        <router-link :to="prevPageUrl">&lt;</router-link>
+        <router-link :to="nextPageUrl">&gt;</router-link>
+        <router-link :to="latestPageUrl">&gt;&gt;</router-link>
     </div>
 </template>
 

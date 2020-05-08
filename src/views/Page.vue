@@ -2,9 +2,9 @@
     <div class="page">
         <h1>{{this.page}}</h1>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
-        <a :href="nextPageUrl">
+        <router-link :to="nextPageUrl">
             <img :src="imgUrl" id="comic-page">
-        </a>
+        </router-link>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
     </div>
 </template>
