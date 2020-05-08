@@ -1,8 +1,7 @@
 <template>
     <div class="page">
-        <h1>Page</h1>
+        <h1>{{this.page}}</h1>
         <img :src="url">
-        <p>Page: {{this.page}} chapter: {{this.chapter}}</p>
     </div>
 </template>
 
