@@ -1,6 +1,14 @@
 <template>
     <div class="archive">
         <h1>Archive</h1>
+        <div class="chapters">
+            <div v-for="ch in chapters" :key="ch.filename">
+                <img :src="'chapter_covers/' + ch.filename + '.png'">
+                <div v-for="p in pages(ch.filename)" :key="p.filename" class="chapter-pages">
+                    <a class="page-link" :href="'/?chapter=' + ch.filename + '&page=' + p.filename.substr(0, p.filename.length-4)">{{p.filename.substr(0, p.filename.length-4)}}</a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -8,7 +16,7 @@
 import files from '@/pages';
 
 export default {
-    name: 'Page',
+    name: 'Archive',
     computed: {
         chapter() {
             if (this.$route.query.chapter == null) {
