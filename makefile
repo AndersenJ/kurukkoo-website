@@ -7,5 +7,5 @@ installdeps:
 	npm install
 
 pages:
-	echo "let files = `ls -R public/comic | jc --ls -p`;" > src/pages.js
+	echo "let files = `ls -lR public/comic | jc --ls -p | grep -v "owner\|group\|flags\|size\|date\|links"`;" > src/pages.js
 	echo "export default files" >> src/pages.js
