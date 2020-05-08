@@ -17,7 +17,7 @@ export default {
 <style scoped>
 .websitenav a {
     padding: 15px;
-    padding-bottom: 13px;
+    padding-bottom: 11px;
     margin: 18px;
     background-color: #505050;
     color: #dcdcdc;
