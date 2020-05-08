@@ -2,7 +2,10 @@
     <div class="page">
         <h1>{{this.page}}</h1>
         <a :href="nextPageUrl">Next</a>
-        <img :src="imgUrl">
+        <a :href="prevPageUrl">Prev</a>
+        <a :href="nextPageUrl">
+            <img :src="imgUrl">
+        </a>
     </div>
 </template>
 
@@ -39,9 +42,18 @@ export default {
                 if (this.allPages[p].filename === this.page + ".png") {
                     let nextPage = this.allPages[parseInt(p)+1];
                     if (nextPage !== undefined) {
-                        console.log("next page:");
-                        console.log(nextPage);
                         return "/?chapter=" + this.chapterFromPage(nextPage) + "&page=" + nextPage.filename.substr(0, nextPage.filename.length-4);
+                    }
+                }
+            }
+            return "/?chapter=" + this.chapter + "&page=" + this.page;
+        },
+        prevPageUrl() {
+            for (let p in this.allPages) {
+                if (this.allPages[p].filename === this.page + ".png") {
+                    let prevPage = this.allPages[parseInt(p)-1];
+                    if (parseInt(p)-1 >= 0) {
+                        return "/?chapter=" + this.chapterFromPage(prevPage) + "&page=" + prevPage.filename.substr(0, prevPage.filename.length-4);
                     }
                 }
             }
