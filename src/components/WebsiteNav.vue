@@ -18,7 +18,7 @@ export default {
 .websitenav {
     display: flex;
     max-width: 430px;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin: auto;
 }
 
