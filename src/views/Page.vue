@@ -92,5 +92,7 @@ export default {
     padding-top: 15px;
     margin-bottom: 15px;
     padding-bottom: 15px;
+    width: 100%;
+    max-width: 800px;
 }
 </style>
