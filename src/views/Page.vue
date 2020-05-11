@@ -6,17 +6,27 @@
             <img :src="imgUrl" id="comic-page">
         </router-link>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
+        <Comments :page="page" />
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 import files from '@/pages';
 import ComicNav from '../components/ComicNav.vue';
+import Comments from '../components/Comments.vue';
 
 export default {
     name: 'Page',
     components : {
         ComicNav: ComicNav,
+        Comments: Comments
+    },
+    data() {
+        return {
+            pages: [],
+            page: {},
+        }
     },
     computed: {
         chapter() {
@@ -27,25 +37,14 @@ export default {
                 return this.$route.query.chapter;
             }
         },
-        page() {
-            if (this.$route.query.page == null) {
-                let latestPage = this.allPages[this.allPages.length-1];
-                return latestPage.filename.substr(0, latestPage.filename.length-4);
-            } else {
-                return this.$route.query.page;
-            }
-        },
         imgUrl() {
-            return "/comic/" + this.chapter + "/" + this.page + ".png";
+            return "/comic/" + this.page.title + ".png";
         },
         chapters() {
             return files.filter(file => file.filename.length === 2);
         },
-        allPages() {
-            return files.filter(file => file.filename.length > 2);
-        },
         firstPageUrl() {
-            return "/?chapter=00&page=000";
+            return "/?page=000";
         },
         nextPageUrl() {
             for (let p in this.allPages) {
@@ -78,11 +77,20 @@ export default {
         chapterFromPage(p) {
             return p.parent.substr(-2);
         },
-        pages(chapter) {
+        async getPages() {
+            try {
+                this.response = await axios.get("/api/pages/all");
+                this.pages = this.response.data;
+            } catch (error) {
+                this.error = error.response.data.message;
+            }
+        },
+        pagesFromChapter(chapter) {
             return files.filter(file => file.parent === "public/comic/" + chapter);
         },
     },
     mounted() {
+        this.getPages();
         document.onkeydown = (event) => {
             switch (event.keyCode) {
                 case 37:
