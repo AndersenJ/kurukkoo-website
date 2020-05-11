@@ -35,8 +35,8 @@ app.use(cookieSession({
 const users = require("./users.js");
 app.use("/api/users", users.routes);
 
-const photos = require("./photos.js");
-app.use("/api/photos", photos.routes);
+const pages = require("./pages.js");
+app.use("/api/pages", pages.routes);
 
 const comments = require("./comments.js");
 app.use("/api/comments", comments.routes);

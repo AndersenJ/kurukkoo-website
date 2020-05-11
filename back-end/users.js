@@ -11,8 +11,19 @@ const router = express.Router();
 // This is the schema. Users have usernames and passwords. We solemnly promise to
 // salt and hash the password!
 const userSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
+  email: String,
+  verified: {
+      type: Boolean,
+      default: false
+  },
+  avatar: {
+      type: String,
+      default: "/avatars/default.png"
+  },
+  role: {
+      type: String,
+      default: "user"
+  },
   username: String,
   password: String,
 });
@@ -104,9 +115,9 @@ router.post('/', async (req, res) => {
   // Make sure that the form coming from the browser includes all required fields,
   // otherwise return an error. A 400 error means the request was
   // malformed.
-  if (!req.body.firstName || !req.body.lastName || !req.body.username || !req.body.password)
+  if (!req.body.email || !req.body.username || !req.body.password)
     return res.status(400).send({
-      message: "first name, last name, username and password are required"
+      message: "email, username, and password are required"
     });
 
   try {
@@ -121,12 +132,19 @@ router.post('/', async (req, res) => {
         message: "username already exists"
       });
 
+    const existingEmail = await User.findOne({
+      email: req.body.email
+    });
+    if (existingEmail)
+      return res.status(403).send({
+        message: "email address already in use"
+      });
+
     // create a new user and save it to the database
     const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      email: req.body.email
     });
     await user.save();
     // set user session info
@@ -140,6 +158,32 @@ router.post('/', async (req, res) => {
     console.log(error);
     return res.sendStatus(500);
   }
+});
+
+const multer = require('multer')
+const upload = multer({
+    dest: '../public/avatars/',
+    limits: {
+        fileSize: 10000000
+    }
+});
+
+// upload avatar
+router.post("/avatar", validUser, upload.single('avatar'), async (req, res) => {
+    // check parameters
+    if (!req.file)
+        return res.status(400).send({
+            message: "Must upload a file."
+        });
+
+        req.user.avatar = "/avatars/" + req.file.filename
+        try {
+            await req.user.save();
+            return res.sendStatus(200);
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(500);
+        }
 });
 
 // login a user
