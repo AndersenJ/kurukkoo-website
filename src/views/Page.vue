@@ -1,10 +1,11 @@
 <template>
     <div class="page">
-        <h1>{{this.page}}</h1>
+        <h1>{{this.page.title}}</h1>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
         <router-link :to="nextPageUrl">
-            <img :src="imgUrl" id="comic-page">
+            <img :src="page.path" id="comic-page">
         </router-link>
+        <p>{{page.description}}</p>
         <ComicNav :firstPageUrl="firstPageUrl" :prevPageUrl="prevPageUrl" :nextPageUrl="nextPageUrl" :latestPageUrl="latestPageUrl" />
         <Comments :page="page" />
     </div>
@@ -25,57 +26,45 @@ export default {
     data() {
         return {
             pages: [],
-            page: {},
+            user: null,
         }
     },
     computed: {
-        chapter() {
-            if (this.$route.query.chapter == null) {
-                let latestPage = this.allPages[this.allPages.length-1];
-                return this.chapterFromPage(latestPage);
-            } else {
-                return this.$route.query.chapter;
-            }
-        },
-        imgUrl() {
-            return "/comic/" + this.page.title + ".png";
-        },
-        chapters() {
-            return files.filter(file => file.filename.length === 2);
-        },
         firstPageUrl() {
             return "/?page=000";
         },
-        nextPageUrl() {
-            for (let p in this.allPages) {
-                if (this.allPages[p].filename === this.page + ".png") {
-                    let nextPage = this.allPages[parseInt(p)+1];
-                    if (nextPage !== undefined) {
-                        return "/?chapter=" + this.chapterFromPage(nextPage) + "&page=" + nextPage.filename.substr(0, nextPage.filename.length-4);
-                    }
-                }
-            }
-            return "/?chapter=" + this.chapter + "&page=" + this.page;
-        },
         prevPageUrl() {
-            for (let p in this.allPages) {
-                if (this.allPages[p].filename === this.page + ".png") {
-                    let prevPage = this.allPages[parseInt(p)-1];
-                    if (parseInt(p)-1 >= 0) {
-                        return "/?chapter=" + this.chapterFromPage(prevPage) + "&page=" + prevPage.filename.substr(0, prevPage.filename.length-4);
-                    }
-                }
+            for (let p in this.pages) {
+                if (this.pages[p].title === this.$route.query.page && p != 0)
+                    return "/?page=" + this.pages[parseInt(p)-1].title;
             }
-            return "/?chapter=" + this.chapter + "&page=" + this.page;
+            return this.firstPageUrl;
+        },
+        nextPageUrl() {
+            for (let p in this.pages) {
+                if (this.pages[p].title === this.$route.query.page && p != this.pages.length-1)
+                    return "/?page=" + this.pages[parseInt(p)+1].title;
+            }
+            return this.latestPageUrl;
         },
         latestPageUrl() {
-            let latestPage = this.allPages[this.allPages.length-1];
-            return "/?chapter=" + this.chapterFromPage(latestPage) + "&page=" + latestPage.filename.substr(0, latestPage.filename.length-4);
+            return "/?page=" + this.pages[this.pages.length-1].title;
         },
+        page() {
+            for (let p in this.pages) {
+                if (this.pages[p].title === this.$route.query.page)
+                    return this.pages[p];
+            }
+            if (this.pages.length > 0)
+                return this.pages[0];
+            else {
+                return null;
+            }
+        }
     },
     methods: {
         chapterFromPage(p) {
-            return p.parent.substr(-2);
+            return p.chapter;
         },
         async getPages() {
             try {
@@ -88,6 +77,15 @@ export default {
         pagesFromChapter(chapter) {
             return files.filter(file => file.parent === "public/comic/" + chapter);
         },
+    },
+    async beforeMount() {
+        try {
+            let response = await axios.get('/api/users');
+            this.$root.$data.user = response.data.user;
+            this.user = response.data.user;
+        } catch (error) {
+            this.$root.$data.user = null;
+        }
     },
     mounted() {
         this.getPages();

@@ -1,3 +1,5 @@
+//note: this file was mostly taken from some example code for a class: https://github.com/BYU-CS-260-Winter-2020/photo-bomb
+
 const express = require("express");
 const mongoose = require('mongoose');
 const argon2 = require("argon2");

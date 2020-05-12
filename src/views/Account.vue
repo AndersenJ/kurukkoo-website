@@ -1,36 +1,37 @@
 <template>
-    <div>
-        <div class="main" v-show="user.role === 'admin'">
-            <h1>Page Upload</h1>
-            <form @submit.prevent="upload">
-                <div class="fields">
-                    <input v-model="title" placeholder="Title">
-                    <input v-model="sortTitle" placeholder="Title for sorting">
-                    <textarea v-model="description" placeholder="Description"></textarea>
-                    <input v-model="chapter" placeholder="Chapter">
-                </div>
-                <div @click="chooseImage">
-                    <img class="preview" v-if="url" :src="url" />
-                    <div v-if="!url">
-                        Choose an Image
-                    </div>
-                    <input class="fileInput" ref="fileInput" type="file" @input="fileChanged">
-                </div>
-                <p v-if="error" class="error">{{error}}</p>
-                <button type="submit" class="pure-button pure-button-primary right">Upload</button>
-            </form>
+    <div class="main">
+        <div v-if="loggedIn">
+            <p>Logged in as {{username}}</p>
         </div>
-        <div v-show="user.role !== 'admin'">
-            <p>You must be an admin to use this page</p>
-        </div>
+        <Login v-show="!loggedIn" />
     </div>
 </template>
 
 
 <script>
 import axios from 'axios';
+import Login from '../components/Login.vue'
+
 export default {
     name: 'Admin',
+    computed: {
+        loggedIn() {
+            if (this.user)
+                return true;
+            else
+                return false;
+        },
+        username() {
+            if (this.loggedIn) {
+                return this.user.username;
+            } else {
+                return "null";
+            }
+        }
+    },
+    components: {
+        Login: Login
+    },
     data() {
         return {
             user: null,
@@ -84,23 +85,3 @@ export default {
     }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.fields {
-    display: flex;
-    flex-direction: column;
-    width: 350px;
-    margin: auto;
-}
-.fields * {
-    padding: 4px;
-    margin: 4px;
-}
-
-.preview {
-    max-width: 100px;
-    max-height: 300px;
-}
-
-</style>

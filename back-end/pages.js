@@ -42,6 +42,7 @@ router.post("/", validUser, upload.single('page'), async (req, res) => {
             title: req.body.title,
             sortTitle: req.body.sortTitle,
             description: req.body.description,
+            chapter: req.body.chapter
         });
         try {
             await page.save();

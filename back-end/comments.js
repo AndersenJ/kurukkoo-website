@@ -30,7 +30,7 @@ const Comment = mongoose.model('Comment', commentSchema);
 router.post("/", validUser, async (req, res) => {
     const comment = new Comment({
         user: req.user,
-        photo: req.body.page,
+        page: req.body.page,
         text: req.body.text,
     });
     try {
@@ -45,10 +45,12 @@ router.post("/", validUser, async (req, res) => {
 // get all comments for page
 router.get("/", async (req, res) => {
     try {
+        console.log("page id: ");
+        console.log(req.query.id);
         let comments = await Comment.find({
-            "page": req.query.id
+            //"page": req.query.id
         }).sort({
-            created: 1
+            created: -1
         }).populate('user');
         return res.send(comments);
     } catch (error) {

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Page from '../views/Page.vue'
 import Archive from '../views/Archive.vue'
 import About from '../views/About.vue'
-import Login from '../views/Login.vue'
+import Account from '../views/Account.vue'
 import Admin from '../views/Admin.vue'
 
 Vue.use(VueRouter)
@@ -25,9 +25,9 @@ Vue.use(VueRouter)
     component: About
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
+    path: '/account',
+    name: 'Account',
+    component: Account
   },
   {
     path: '/admin',
