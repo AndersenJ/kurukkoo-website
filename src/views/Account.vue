@@ -1,9 +1,9 @@
 <template>
     <div class="main">
         <div v-if="loggedIn">
-            <p>Logged in as {{username}}</p>
+            <p>Logged in as <b>{{username}}</b></p>
         </div>
-        <Login v-show="!loggedIn" />
+        <Login v-on:check-user="checkUser();" v-show="!loggedIn" />
     </div>
 </template>
 
@@ -45,15 +45,18 @@ export default {
         }
     },
     async beforeMount() {
-        try {
-            let response = await axios.get('/api/users');
-            this.$root.$data.user = response.data.user;
-            this.user = response.data.user;
-        } catch (error) {
-            this.$root.$data.user = null;
-        }
+        this.checkUser();
     },
     methods: {
+        async checkUser() {
+            try {
+                let response = await axios.get('/api/users');
+                this.$root.$data.user = response.data.user;
+                this.user = response.data.user;
+            } catch (error) {
+                this.$root.$data.user = null;
+            }
+        },
         fileChanged(event) {
             this.file = event.target.files[0];
             this.url = URL.createObjectURL(this.file);
@@ -85,3 +88,7 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+</style>

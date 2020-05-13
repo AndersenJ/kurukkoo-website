@@ -5,6 +5,9 @@
             <br />
             <button type="submit">Comment</button>
         </form>
+        <router-link :to="'/account?page=' + page.title" v-else>
+            <p class="account-link">Login or Register to comment</p>
+        </router-link>
         <div class="comment" v-for="comment in pageComments" v-bind:key="comment._id">
             <div class="avatar">
                 <img :src="comment.user.avatar">
@@ -135,6 +138,30 @@ form {
     padding-left: 1em;
     padding-right: 1em;
     margin-bottom: 8px;
+}
+
+.account-link, button {
+    padding: 15px;
+    padding-bottom: 13px;
+    background-color: #505050;
+    color: #dcdcdc;
+    text-decoration: none;
+    width: max-content;
+    margin: auto;
+    margin-top: 13px;
+}
+
+a {
+    text-decoration: none;
+}
+
+textarea {
+    background-color: #f8f8f8;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
 }
 
 </style>

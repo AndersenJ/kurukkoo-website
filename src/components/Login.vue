@@ -1,7 +1,6 @@
 <template>
     <div>
         <form>
-                <legend>Register for an account</legend>
                 <input placeholder="email" v-model="email">
                 <input placeholder="username" v-model="username">
                 <input type="password" placeholder="password" v-model="password">
@@ -9,7 +8,6 @@
         </form>
         <p v-if="error" class="error">{{error}}</p>
         <form>
-                <legend>Login</legend>
                 <input placeholder="username" v-model="usernameLogin">
                 <input type="password" placeholder="password" v-model="passwordLogin">
                 <button type="submit" class="pure-button pure-button-primary" @click.prevent="login">Login</button>
@@ -62,6 +60,7 @@ export default {
                     password: this.passwordLogin,
                 });
                 this.$root.$data.user = response.data.user;
+                this.$emit('check-user');
             } catch (error) {
                 this.errorLogin = "Error: " + error.response.data.message;
                 this.$root.$data.user = null;
@@ -74,4 +73,43 @@ export default {
 
 
 <style scoped>
+
+input {
+    background-color: #f8f8f8;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: auto;
+    border: solid 3px #606060;
+    margin-top: 18px;
+    margin-bottom: 8px;
+}
+
+form * {
+    padding: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+}
+
+.account-link, button {
+    padding: 15px;
+    padding-bottom: 13px;
+    background-color: #505050;
+    color: #dcdcdc;
+    text-decoration: none;
+    width: max-content;
+    margin: auto;
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
 </style>
