@@ -171,7 +171,7 @@ const upload = multer({
 });
 
 // upload avatar
-router.post("/avatar", validUser, upload.single('avatar'), async (req, res) => {
+router.put("/avatar", validUser, upload.single('avatar'), async (req, res) => {
     // check parameters
     if (!req.file)
         return res.status(400).send({

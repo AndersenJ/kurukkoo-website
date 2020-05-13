@@ -28,7 +28,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .explanation {
-    width: 900px;
+    max-width: 900px;
     margin: auto;
     text-align: left;
     border: solid 5px #505050;

@@ -21,6 +21,10 @@ const pageSchema = new mongoose.Schema({
     sortTitle: String,
     description: String,
     chapter: String,
+    type: {
+        type: String,
+        default: "basic"
+    },
     created: {
         type: Date,
         default: Date.now

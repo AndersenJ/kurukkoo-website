@@ -46,7 +46,7 @@ export default {
 }
 
 .chapters > div {
-    width: 800px;
+    max-width: 800px;
     margin: auto;
     padding-bottom: 50px;
 }

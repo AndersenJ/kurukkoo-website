@@ -2,6 +2,22 @@
     <div class="main">
         <div v-if="loggedIn">
             <p>Logged in as <b>{{username}}</b></p>
+            <div class="avatar">
+                <img :src="user.avatar">
+            </div>
+            <form class="new-avatar" @submit.prevent="upload">
+                <div @click="chooseImage">
+                    <img class="preview" v-if="url" :src="url" />
+                    <div v-if="!url">
+                        Upload a new Avatar
+                    </div>
+                    <input class="fileInput" ref="fileInput" type="file" @input="fileChanged"/>
+                </div>
+                <button type="submit">Upload</button>
+            </form>
+            <router-link v-if="$route.query.page" :to="'/?page=' + $route.query.page">
+                Return to page {{$route.query.page}}
+            </router-link>
         </div>
         <Login v-on:check-user="checkUser();" v-show="!loggedIn" />
     </div>
@@ -27,7 +43,7 @@ export default {
             } else {
                 return "null";
             }
-        }
+        },
     },
     components: {
         Login: Login
@@ -48,6 +64,20 @@ export default {
         this.checkUser();
     },
     methods: {
+        async upload() {
+            try {
+                const formData = new FormData();
+                formData.append('avatar', this.file, this.file.name);
+                await axios.put("/api/users/avatar", formData);
+                this.file = null;
+                this.url = "";
+                this.title = "";
+                this.description = "";
+                this.$emit('uploadFinished');
+            } catch (error) {
+                this.error = "Error: " + error.response.data.message;
+            }
+        },
         async checkUser() {
             try {
                 let response = await axios.get('/api/users');
@@ -67,28 +97,34 @@ export default {
         chooseImage() {
             this.$refs.fileInput.click()
         },
-        async upload() {
-            try {
-                const formData = new FormData();
-                formData.append('page', this.file, this.file.name);
-                formData.append('title', this.title);
-                formData.append('sortTitle', this.sortTitle);
-                formData.append('description', this.description);
-                formData.append('chapter', this.chapter);
-                await axios.post("/api/pages", formData);
-                this.file = null;
-                this.url = "";
-                this.title = "";
-                this.description = "";
-                this.$emit('uploadFinished');
-            } catch (error) {
-                this.error = "Error: " + error.response.data.message;
-            }
-        }
     }
 }
 </script>
 
 <style scoped>
+
+img {
+    max-width: 80px;
+    max-height: 80px;
+    margin: auto;
+}
+
+button, a {
+    border: 0;
+    cursor: pointer;
+    padding: 15px;
+    padding-bottom: 13px;
+    background-color: #505050;
+    color: #dcdcdc;
+    text-decoration: none;
+    width: max-content;
+    margin: auto;
+    margin-top: 23px;
+    margin-bottom: 23px;
+}
+
+form.new-avatar {
+    margin-top: 15px;
+}
 
 </style>

@@ -45,8 +45,6 @@ router.post("/", validUser, async (req, res) => {
 // get all comments for page
 router.get("/", async (req, res) => {
     try {
-        console.log("page id: ");
-        console.log(req.query.id);
         let comments = await Comment.find({
             //"page": req.query.id
         }).sort({
