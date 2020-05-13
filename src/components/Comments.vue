@@ -73,6 +73,7 @@ export default {
             try {
                 this.response = await axios.post("/api/comments", newComment);
                 this.getComments();
+                this.addedText = '';
             } catch (error) {
                 this.error = error.response.data.message;
             }
