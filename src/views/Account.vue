@@ -15,6 +15,7 @@
                 </div>
                 <button type="submit">Upload</button>
             </form>
+            <button v-on:click="logout">Logout</button>
             <router-link v-if="$route.query.page" :to="'/?page=' + $route.query.page">
                 Return to page {{$route.query.page}}
             </router-link>
@@ -77,6 +78,16 @@ export default {
             } catch (error) {
                 this.error = "Error: " + error.response.data.message;
             }
+        },
+        async logout() {
+            try {
+                await axios.delete('/api/users');
+                this.$root.$data.user = null;
+                this.user = null
+            } catch (error) {
+                this.$root.$data.user = null;
+            }
+            this.checkUser();
         },
         async checkUser() {
             try {
