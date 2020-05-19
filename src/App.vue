@@ -47,16 +47,4 @@ h1 {
     margin-bottom: 6px;
 }
 
-.footer, .footer a {
-    width: 100%;
-    margin: auto;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    text-align: center;
-    background-color: #000000;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    color: #dcdcdc;
-}
 </style>
