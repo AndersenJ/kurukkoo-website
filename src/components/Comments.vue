@@ -1,8 +1,13 @@
 <template>
     <div class="comments">
         <form v-on:submit.prevent="addComment" v-if="user">
-            <textarea v-model="addedText"></textarea>
-            <br />
+            <div class="comment">
+                <div class="avatar">
+                    <img :src="user.avatar">
+                    <p class="commentUsername">{{user.username}}</p>
+                </div>
+                <textarea v-model="addedText" class="commentInfo"></textarea>
+            </div>
             <button type="submit">Comment</button>
         </form>
         <router-link :to="'/account?page=' + page.title" v-else>
@@ -84,7 +89,7 @@ export default {
 
 <style scoped>
 
-form, button, textarea {
+form, button {
     padding: 5px;
 }
 
@@ -134,7 +139,7 @@ form {
     padding-right: 1.15em;
 }
 
-.commentText {
+.commentText, textarea.commentInfo {
     text-align: left;
     padding-left: 1em;
     padding-right: 1em;
@@ -156,13 +161,17 @@ a {
     text-decoration: none;
 }
 
-textarea {
-    background-color: #f8f8f8;
-}
-
 button {
     border: 0;
     cursor: pointer;
+}
+
+textarea.commentInfo {
+    max-width: 500px;
+    margin: auto;
+    height: 100px;
+    padding: 0.5em;
+    box-sizing: border-box;
 }
 
 </style>
