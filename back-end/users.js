@@ -164,7 +164,7 @@ router.post('/', async (req, res) => {
 
 const multer = require('multer')
 const upload = multer({
-    dest: '/var/www/comic.kurukkoo.com/avatars/',
+    dest: '/var/www/html/avatars/',
     limits: {
         fileSize: 10000000
     }

@@ -5,7 +5,7 @@ const router = express.Router();
 // Configure multer so that it will upload to '/public/images'
 const multer = require('multer')
 const upload = multer({
-    dest: '/var/www/comic.kurukkoo.com/pages/',
+    dest: '/var/www/html/pages/',
     limits: {
         fileSize: 100000000
     }

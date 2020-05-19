@@ -1,6 +1,6 @@
 all:
 	npm run build
-	cp -rp dist/* /var/www/comic.kurukkoo.com/
+	cp -rp dist/* /var/www/html/
 
 installdeps:
 	npm install
