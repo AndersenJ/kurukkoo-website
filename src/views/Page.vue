@@ -42,7 +42,7 @@ export default {
         },
         nextPageUrl() {
             for (let p in this.pages) {
-                if (this.pages[p].title === this.$route.query.page && p != this.pages.length-1)
+                if (this.pages[p].title === this.page.title && p != this.pages.length-1)
                     return "/?page=" + this.pages[parseInt(p)+1].title + "&scroll=true";
             }
             return this.latestPageUrl;
