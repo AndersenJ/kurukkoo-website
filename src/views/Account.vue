@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-if="loggedIn">
+        <div v-if="loggedIn" class="logged-in">
             <p>Logged in as <b>{{username}}</b></p>
             <div class="avatar">
                 <img :src="user.avatar">
@@ -13,12 +13,12 @@
                     </div>
                     <input class="fileInput" ref="fileInput" type="file" @input="fileChanged"/>
                 </div>
-                <button type="submit">Upload</button>
+                <button v-if="url" type="submit">Upload</button>
             </form>
-            <button v-on:click="logout">Logout</button>
             <router-link v-if="$route.query.page" :to="'/?page=' + $route.query.page">
                 Return to page {{$route.query.page}}
             </router-link>
+            <button v-on:click="logout">Logout</button>
         </div>
         <Login v-on:check-user="checkUser();" v-show="!loggedIn" />
     </div>
@@ -130,12 +130,17 @@ button, a {
     text-decoration: none;
     width: max-content;
     margin: auto;
-    margin-top: 23px;
-    margin-bottom: 23px;
+    margin-top: 13px;
+    margin-bottom: 13px;
 }
 
 form.new-avatar {
     margin-top: 15px;
+}
+
+.logged-in {
+    display: flex;
+    flex-direction: column;
 }
 
 </style>
