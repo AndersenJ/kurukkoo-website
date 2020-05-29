@@ -101,6 +101,7 @@ form {
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 15px;
+    width: 120px;
 }
 
 .avatar img {
@@ -113,17 +114,17 @@ form {
     margin: auto;
     display: flex;
     margin-top: 10px;
-    align-items: center;
+    align-items: stretch;
 }
 
 .commentUsername {
     margin: 0;
+    word-wrap: break-word;
 }
 
 .commentInfo {
     width: 100%;
     border: solid 3px #606060;
-    height: min-content;
 }
 
 .commentInfo, .commentInfo * {
