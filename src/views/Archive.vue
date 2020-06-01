@@ -4,11 +4,11 @@
         <div class="chapters">
             <div v-for="ch in chapters" :key="ch.filename">
                 <div>
-                    <img :src="'chapter_covers/' + ch.filename + '.png'">
+                    <img :src="'chapter_covers/' + ch + '.png'">
                 </div>
                 <div class="chapter-pages">
-                    <div v-for="p in pages(ch.filename)" :key="p.filename">
-                        <a class="page-link" :href="'/?chapter=' + ch.filename + '&page=' + p.filename.substr(0, p.filename.length-4)">{{p.filename.substr(0, p.filename.length-4)}}</a>
+                    <div v-for="p in pagesInChapter(ch)" :key="p.sortTitle">
+                        <a class="page-link" :href="'/?page=' + p.title">{{p.title}}</a>
                     </div>
                 </div>
             </div>
@@ -17,23 +17,40 @@
 </template>
 
 <script>
-import files from '@/pages';
+import axios from 'axios';
 
 export default {
     name: 'Archive',
+    data() {
+        return {
+            pages: [],
+        }
+    },
     computed: {
         chapters() {
-            return files.filter(file => file.filename.length === 2);
+            let c = new Set();
+            for (let i = 0; i < this.pages.length; i++) {
+                c.add(this.pages[i].chapter);
+            }
+            return Array.from(c);
         },
     },
     methods: {
-        chapterFromPage(p) {
-            return p.parent.substr(-2);
+        pagesInChapter(chapter) {
+            return this.pages.filter(page => page.chapter === chapter);
         },
-        pages(chapter) {
-            return files.filter(file => file.parent === "public/comic/" + chapter);
+        async getPages() {
+            try {
+                this.response = await axios.get("/api/pages/all");
+                this.pages = this.response.data;
+            } catch (error) {
+                this.error = error.response.data.message;
+            }
         },
     },
+    mounted() {
+        this.getPages();
+    }
 }
 
 </script>

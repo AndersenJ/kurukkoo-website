@@ -13,7 +13,6 @@
 
 <script>
 import axios from 'axios';
-import files from '@/pages';
 import ComicNav from '../components/ComicNav.vue';
 import Comments from '../components/Comments.vue';
 
@@ -84,18 +83,15 @@ export default {
                 this.error = error.response.data.message;
             }
         },
-        pagesFromChapter(chapter) {
-            return files.filter(file => file.parent === "public/comic/" + chapter);
+        async checkUser() {
+            try {
+                let response = await axios.get('/api/users');
+                this.$root.$data.user = response.data.user;
+                this.user = response.data.user;
+            } catch (error) {
+                this.$root.$data.user = null;
+            }
         },
-    },
-    async beforeMount() {
-        try {
-            let response = await axios.get('/api/users');
-            this.$root.$data.user = response.data.user;
-            this.user = response.data.user;
-        } catch (error) {
-            this.$root.$data.user = null;
-        }
     },
     mounted() {
         this.getPages();
@@ -110,6 +106,7 @@ export default {
             }
         };
         this.scrollToPage();
+        this.checkUser();
     }
 }
 
